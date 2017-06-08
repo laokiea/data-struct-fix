@@ -1,0 +1,81 @@
+
+/* 线性表 顺序存储结构 : 可以用一位数组代替*/
+
+// 数组的长度代表分配内存大大小
+// 链表的长度代表当前链表元素的个数
+// 知道某一个元素在内存中的地址，就可以得出其他元素的地址，寻址的函数的时间复杂度为O(1)
+#define MAXSIZE 20
+typedef ElemType int;
+typedef struct 
+{
+	list data; // 元素
+	int length; 链表长度
+}SqList;
+
+
+/ * GetElem */
+#define ERROR false
+#define OK 1
+#define FLASE 0
+typedef int Status;
+typedef int ElemType;
+Status GetElem(SqList L,int i,ElemType *e) {
+	if(i > ListLength(L) || i < 0 || ListLength(L) < 1) return ERROR;
+	*e = L->data[i-1];
+	return OK;
+}
+
+Status ListInsert(SqList *L, int i, ElemType e) {
+	// ERROR situations
+	for(int k = SqList->length;k >= i-1 ;k --) {
+		L.data[++k] = L.data[k];
+	}
+	L.data[i] = e;
+	L.length++;
+	return OK;
+}
+
+*********************************************************************************************************************************************
+
+/* 线性表 链表存储结构 ： 描述一个节点的结构(数据域和指针域)*/
+typedef struct Node{
+	ElemType data;
+	struct Node *next; // 指向下一个节点的指针
+	// Node *next
+}Node,*LinkList;
+
+/* 如果你理解int a与int *a的区别，再理解了typedef int ElemType 你就可以理解上面例子。
+
+typedef struct Node{
+    ElemType e;
+    struct Node *next; 
+} Node, *LinkList;
+首先从外层看，typedef [] *** 就是把[] 中的类型重新定义成以***表示；
+例子中的意思就是说，中间的结构体类型变量struct Node{***} 在这里可以用Node和*LinkList来表示了。并且，
+当需要声明Node变量时，就可以用 Node p来声明；等同于 struct Node p
+当需要声明Node指针变量时，就可以用LinkList p来声明；等同于 struct Node *p
+
+再看中间的结构体定义：
+定义了一个别名为Node的结构体类型：
+这个结构体由一个ElemType类型的变量e和一个当前结构体类型指针 *next构成
+而后你声明的每一个该结构体类型的变量中都包含这两个元素。*/
+typedef int Status;
+typedef int ElemType;
+Status GetElem(LinkList L,int i,ElemType *e) {
+	int j;
+	LinkList p;
+	p = L->next; // p代表链表的第一个节点
+	j = 1;  // 先从1开始
+	if(p && j<i) {
+		p = p->next;
+		j++
+	}
+	*e = p->data;
+	return OK;
+}
+
+// 获得链表的长度
+// LinkList L = Node *L
+Status getLength(LinkList L) {
+	
+}
