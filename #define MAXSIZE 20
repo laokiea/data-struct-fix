@@ -134,3 +134,56 @@ Status ListInsert(LinkList L, int i ,Elem e) {
  	free(q);
  	return OK;
  }
+
+
+ *******************************************************************************************************************************************
+ /* 静态链表 */
+ // 使用数组代替单链表的结构
+ // 数组的元素保存着两个值 ：数据和游标，游标类似指针，游标值即后继元素的下标值
+ // 静态链表分为有元素部分和备用链表部分
+ // 链表的第一个元素，不存放数据，只存放备用链表的第一个元素的下标值，而链表的最后一个元素也不存放值，游标指向了第一个有值元素的下标
+
+
+ // 静态链表的插入
+ // 先要找到备用链表的第一个元素的下标
+ //若备用链表非空则返回第一个元素的下标值，否则返回0
+ int Molloc_SLL(StaticLinkList space) {
+ 	int i = space[0].cur;
+ 	if(i) {
+ 		space[0].cur = space[i].cur;
+ 		return i;
+ 	}
+ 	return 0;
+ }
+
+
+ // 先找到备用链表的第一个元素的下标值，告诉前一个元素，你的cur改成上一步找到的下标值，再告诉插入元素，你的cur就是上一个元素的前cur
+ // i之后插入
+ Status ListInsert(StaticLinkList L, int i, ElemType e) {
+ 	// 找到备用链表的第一个元素的下标值
+ 	j = Molloc_SLL(L);
+ 	if(j) {
+ 		L[j].data = e;
+ 		cur = L[i].cur;
+ 		L[i].cur = j;
+ 		L[j].cur = cur;
+ 	}
+ }
+
+ // i之前插入
+ Status ListInsert(StasticLinkList L,int i,ElemType e) {
+ 	// 重点是i之前那个元素的下标值怎么获取
+ 	int k,j,m;
+ 	k = MAXSIZE - 1; // 代表第一个有值元素的下标，通常都是1
+ 	j = Molloc_SLL(L); // 找到备用链表的第一个元素
+ 	if(j) {
+	 	L[j].data = e;
+
+	 	for(m=0,m<i-1;m++) 
+	 		k = L[k].cur;   // 找到i之前的那个元素的下标值
+	 	L[j].cur = L[k].cur;
+	 	L[k].cur = j;
+	 	return OK;
+ 	}
+ 	return ERROR;
+ }
