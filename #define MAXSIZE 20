@@ -76,6 +76,61 @@ Status GetElem(LinkList L,int i,ElemType *e) {
 
 // 获得链表的长度
 // LinkList L = Node *L
-Status getLength(LinkList L) {
-	
+Status getLength(LinkList L, *length) {
+	LinkList p;
+	int j = 1;
+	p = L->next;
+	while(p) {
+		p = p->next;
+		j++;
+	}
+	*length = j;
+	return OK;
 }
+
+// 单链表的插入
+/*
+ * 1. 声明一点p代表链表的第一个节点，开始遍历，累加初始遍历j
+ * 2. 如果到链表的结尾，还没有累加到i，则说明i位置不存在
+ * 3. 找到i位置，新建节点s，s->data=e;
+ * 4. 前后节点的地址变化
+ */
+Status ListInsert(LinkList L, int i ,Elem e) {
+	L = LinkList->next;
+	j = 1;
+	while(L && j < i) {
+		L = L->next;
+		j++;
+	}
+	if(!L || j > i) 
+		return ERROR;
+	LinkList s;
+	s = (LinkList) malloc (sizeof( Node ));
+	s->data = e;
+	s->next = L->next;
+	L->next = s;
+	return OK;
+}
+
+// 单链表的删除
+/*
+ * 1. 声明一点p代表链表的第一个节点，开始遍历，累加初始遍历j
+ * 2. 如果到链表的结尾，还没有累加到i，则说明i位置不存在
+ * 3. 找到i位置，前后节点的地址变化
+ */
+ Status NodeDelete(LinkList L, int i ,Elem *e) {
+ 	int j = 1;
+ 	L = L->next;
+ 	while (L && j < (i-1)) {
+ 		L = L->next;
+ 		j++;
+ 	}
+ 	if(!L || ++j > i) 
+ 		return ERROR;
+ 	q = L->next;
+ 	p = q->next;
+ 	L->next = p;
+ 	*e = q->data;
+ 	free(q);
+ 	return OK;
+ }
