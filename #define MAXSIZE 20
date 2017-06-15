@@ -35,6 +35,14 @@ Status ListInsert(SqList *L, int i, ElemType e) {
 	return OK;
 }
 
+
+
+
+
+
+
+
+
 *********************************************************************************************************************************************
 
 /* 线性表 链表存储结构 ： 描述一个节点的结构(数据域和指针域)*/
@@ -136,6 +144,11 @@ Status ListInsert(LinkList L, int i ,Elem e) {
  }
 
 
+
+
+
+
+
  *******************************************************************************************************************************************
  /* 静态链表 */
  // 使用数组代替单链表的结构
@@ -186,4 +199,39 @@ Status ListInsert(LinkList L, int i ,Elem e) {
 	 	return OK;
  	}
  	return ERROR;
+ }
+
+
+
+
+
+
+*************************************************************************************************************************************************
+ /* 双向链表 */
+ 在单链表的基础上，每一个节点除了含有指向想一个节点的指针，还含有指向上一个节点的指针
+
+ // 定义
+ typedef struct DoubleNode{
+ 	ElemType e;
+ 	DoubleNode *next;
+ 	DoubleNode *prior;
+ } DoubleNode, *DoubleLinkList;
+
+ 双向链表对于单链表来说，主要就是插入和删除的时候需要多处理前继指针
+ // 双向链表的插入（i之前）
+ Status DoubleListInsert(DoubleLinkList DL, int i, ElemType e) {
+ 	int j = 0;
+ 	p = DL->next;
+ 	while(p && j < i) {
+ 		p = p->next;
+ 		j++;
+ 	}
+ 	if(j > i) return ERROR;
+ 	// p即为第i个节点
+ 	s = (LinkList) malloc (sizeof( Node ));
+ 	s->prior = p;
+ 	s->next = p->next;
+ 	p->next->prior = s;
+ 	p->next = s;
+ 	return OK;
  }

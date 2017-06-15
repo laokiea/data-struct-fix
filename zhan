@@ -1,0 +1,53 @@
+// 栈也是一种特殊的线性表 栈遵循后入先出的原则，所有的元素只能从栈顶出
+// 栈的顺序存储结构 称为顺序栈
+
+// 顺序栈的定义。规定数组下标为0的一端为栈底，其中有一个游标指向栈顶的位置
+#define MAXSIZE 20
+typedef int SElemType;
+typedef struct SLinkList{
+	SElemType e;
+	int top;
+}SLinkList;
+
+// 顺序栈的插入
+Status SLinkListPush(SLinkList *s, SElemType e) {
+	if(s->top > MAXSIZE - 1) return ERROR
+	s->top++;
+	s->data[s->top] = e;
+	return OK;
+}
+
+// 顺序栈的弹出 
+Status SLinkListPop(SLinkList *s, SElemType *e) {
+	if(s->top == -1) return ERROR;
+	*e = s->data[s->top];
+	s->top--;     
+	return OK;                                                
+}
+
+
+// 两栈共享空间，思想就是用一个数组去表示两个顺序栈
+#define MAXSIZE 20
+typedef int SElemType;
+typedef struct SDoubleLinkList{
+	SElemType e;
+	int top1;
+	int top2;
+}SDoubleLinkList;
+
+
+
+
+
+
+
+************************************************************************************************************************************************
+栈的链式存储结构
+typedef struct StackNode {
+	ElemType e;
+	StackLinkList next;
+}StackNode, *StackLinkList;
+
+typedef struct LinkStack {
+	
+}
