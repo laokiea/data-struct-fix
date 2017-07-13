@@ -128,11 +128,115 @@ class LinkList {
 	}
 }
 
-$list = LinkList::getInstance();
-$list->createListTail(5);
+// $list = LinkList::getInstance();
+// $list->createListTail(5);
 // echo $list->getELem(3);
 // $list->listInsert(3,3.5);
 // $list->ListDelete(2,$e);
 // echo $e;
-$list->clearList();
+// $list->clearList();
 // var_export(get_defined_vars());
+
+
+/***************************************************************************************************************************************************/
+
+
+// 一个类表示单链表
+class LineStruct{
+	public $data;
+	public $next;
+
+	public function  __construct($data = null, $next = null){
+		$this->data = $data;
+		$this->next = $next;
+	}
+}
+
+function createListHead(LineStruct &$linelist,$initSize = 5){ 
+	for($i = 1; $i <= $initSize; $i++) {
+		$node = new LineStruct($i);
+		$node->next = $linelist->next;
+		$linelist->next = $node;
+	}
+}
+
+function createListTail(LineStruct &$linelist,$initSize = 5) {
+	$tail = $linelist;
+	for($i = 1; $i <= $initSize; $i++) { 
+		$node = new LineStruct($i);
+		$node->next = $tail->next;
+		$tail->next = $node;
+		$tail = $node;
+	}
+}
+
+// $i之后的位置插入
+function listInsert(LineStruct &$linelist, $i, $e) {
+	// 第一个结点
+	$p = $linelist->next;
+	$j = 1;
+	while ($p && $j < $i) {
+		$p = $p->next;
+		$j++;
+	}
+	// 此时p指向第i个元素
+	$node = new LineStruct($e);
+	$node->next = $p->next;
+	$p->next = $node;
+}
+
+// 删除第i个结点
+function listDelete(LineStruct &$linelist, $i) {
+	// 第一个结点
+	$p = $linelist->next;
+	$j = 1;
+	while ($p && $j < $i-1) {
+		$p = $p->next;
+		$j++;
+	}
+	// 此时$p是i-1的位置,$n是第n个位置
+	$n = $p->next;
+	$p->next = $n->next;
+}
+
+// $ = new LineStruct('');// 头结点 指向第一个结点
+// createListHead($linelist,5);
+// createListTail($linelist,5);
+// listInster($linelist,3,'hello');
+// listDelete($linelist,2);
+// var_export($linelist);
+
+
+/* 关于单链表的部分习题 */
+// 1. 逆序构造单链表: 使链表结构是6->5->4->3->2->1
+// 使用头插法即可
+// 头结点
+$linelist = new LineStruct('');
+createListHead($linelist,6);
+// var_export($linelist);
+
+// 2. 链表反转: 假设有链表6->5->4->3->2->1,反转链表成为1->2->3->4->5->6
+function reverse(LineStruct $linelist) {
+	// 第一个结点
+	$pre = null;
+	$leftNodes = $linelist->next;	
+	while($leftNodes) {
+		$temp = $leftNodes->next;
+		$leftNodes->next = $pre;
+		$pre = $leftNodes;
+		$leftNodes = $temp;
+	}
+	$headNode = new LineStruct('',$pre);
+	return $headNode;
+}
+// var_export(reverse($linelist));
+
+
+// 3. 链表升序排序
+function asc_sort($beginNode, $endNode) {
+	if($beginNode == $endNode || $beginNode->next == null) return;
+	$base = $beginNode->data;
+	$i = $begin;
+	$j = $begin->next;
+}
+asc_sort($linelist->next,null);

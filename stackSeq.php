@@ -68,10 +68,10 @@ class DoubleStack {
 }
 
 
-$stack = new Stack(10);
-$str = 'helloworld';
-for($i=0;$i<strlen($str);$i++) {
-	$stack->stackInsert($str{$i});
-}
-$stack->stackDelete($e);
-echo $e;
+// $stack = new Stack(10);
+// $str = 'helloworld';
+// for($i=0;$i<strlen($str);$i++) {
+// 	$stack->stackInsert($str{$i});
+// }
+// $stack->stackDelete($e);
+// // echo $e;

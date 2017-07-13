@@ -1,0 +1,87 @@
+// 队列和栈一样也是一种特殊的线性表，所以也存在顺序和链式结构
+// 不同于栈的是，栈的数据插入和删除都只能在栈顶位置操作，FILO，队列是队尾进，队头出，FIFO
+
+// 队列的顺序存储结构
+// 如果队头出去一个元素，后面所有的元素都得往前移动，那么这就跟线性表没啥区别了。
+// 所以可以设立两个指针front和rear分别指向队头和队尾元素的下一个元素，为了避免空元素的浪费，采用循环队列的结构
+// 当队满时， rear=front,但这个条件是必要不充分条件。因为，当队列为空时，rear也等于front，
+// 所以保持队列任何时候都有一个空元素，当rear指向最后一个空元素时，即为队满
+// 判断队满的条件 : ( rear + 1 ) % queueSize = front
+// 计算队列长度的公式 : (rear - front + queueSize) % queueSize 
+
+
+// 循环队列的实现
+typedef struct QueueList{
+	QElemType data[MAXSIZE];
+	int front;
+	int rear;
+}QueueList;
+
+// 循环队列的初始化
+Status initQueue(QueueList *Q){
+	Q->front = 0;
+	Q->rear = 0;
+	return OK;
+}
+
+// 循环队列的插入
+Status EnQueue(QueueList *Q, QElemType e) {
+	// 判断满队列
+	if( (Q->rear + 1) % MAXSIZE == Q->front )
+	return ERORR;
+	Q->data[Q->rear] = e;
+	Q->rear = ++Q->rear % MAXSIZE;
+	return OK;
+}
+
+// 循环队列的删除
+Status DeQueue(QueueList *Q, QElemType *e) {
+	// 判断空队列
+	if (Q->rear == Q->front) 
+		return ERROR;
+	*e = Q->data[Q->front];
+	Q->front = ++Q->front%MAXSIZE;
+}
+
+
+*******************************************************************************************************
+链式结构无需考虑队满的情况，因为内存不需要预先分配好
+规定将front指针指向单链表的头结点，rear指针指向最后一个节点
+所以rear和front都指向头结点时，代表链式结构的空队列
+
+// 定义
+typedef struct QNode{
+	QElemType int;
+	QNodePtr next;
+
+}QNode,*QNodePtr;
+
+typedef struct QLinkList{
+	QNodePtr front;
+	QNodePtr rear;
+}
+
+// 入队
+// 因为只能在队尾插入元素，所以相对单链表任何位置都可以插入来说,更加简单
+// 最后一个元素后面再加上一个元素即可
+Status Enqueue(QLinkList Q, QElemType e){
+	QNodePtr s = (QNodePtr) molloc (sizeof(QNode));
+	s->data = e;
+	s->next = NULL;
+	Q->rear->next = s;
+	Q->rear =s;
+	return Ok;
+}
+
+Status Dequeue(QLinkList Q, QElemType *e){
+	if(Q->front == Q->next)
+		return ERROR;
+	// Q->front的下一个节点
+	p = Q->front->next;
+	*e = p->data;
+	Q->front->next = p->next;
+	
+	// 队尾元素等于队首元素。即队列中只有一个元素,将队列变成空队列
+	if(Q->rear == p) Q->rear = Q->front;
+	return OK;
+}
